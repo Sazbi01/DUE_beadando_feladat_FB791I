@@ -23,6 +23,12 @@ class operation:
     def pi(self):
         return math.pi
 
+    def sin(self):
+        return float(math.sin(self.x))
+
+    def cos(self):
+        return float(math.cos(self.x))
+
     def result(self):
         match self.o:
             case '+':

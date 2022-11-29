@@ -1,5 +1,7 @@
+import tkinter.messagebox
 from tkinter import *
 from calculating import *
+from os.path import exists
 
 calc = operation()
 isClearable = [False]
@@ -102,6 +104,29 @@ def showSqrt():
         isClearable[0] = True
         lbl_result.config(text=result[0:12])
 
+def memoryHandler(operation):
+    try:
+        match operation:
+            case '+':
+                f = open('mem.clc', 'w')
+                f.write(lbl_result['text'])
+            case '-':
+                f = open('mem.clc', 'w')
+            case 'R' :
+                if (exists('mem.clc')):
+                    f = open('mem.clc', 'r')
+                    value = f.readline()
+                    if (value == ''):
+                        lbl_result.config(text='0')
+                    else:
+                        lbl_result.config(text=value)
+                else:
+                    lbl_result.config(text='0')
+    except:
+        tkinter.messagebox.showerror(title='Hiba', message='A memóriakezelést nem sikerült végrehajtani!')
+    finally:
+        f.close()
+
 #ablak felépítése
 window = Tk()
 window.title('Számológép')
@@ -113,9 +138,9 @@ lbl_result = Label(window, width=14, height=2, text='0', font=('Verdana', 38), b
 lbl_result.pack()
 
 Button(window, text='CE', width=4, height=1, font=('arial', 28), bd=1, fg='#000000', bg='#E6790E', command=lambda: clearAll()).place(x=10, y=145)
-Button(window, text='M+', width=4, height=1, font=('arial', 28), bd=1, fg='#000000', bg='#FBFBFB').place(x=115, y=145)
-Button(window, text='M-', width=4, height=1, font=('arial', 28), bd=1, fg='#000000', bg='#FBFBFB').place(x=220, y=145)
-Button(window, text='MR', width=4, height=1, font=('arial', 28), bd=1, fg='#000000', bg='#FBFBFB').place(x=325, y=145)
+Button(window, text='M+', width=4, height=1, font=('arial', 28), bd=1, fg='#000000', bg='#FBFBFB', command=lambda: memoryHandler('+')).place(x=115, y=145)
+Button(window, text='M-', width=4, height=1, font=('arial', 28), bd=1, fg='#000000', bg='#FBFBFB', command=lambda: memoryHandler('-')).place(x=220, y=145)
+Button(window, text='MR', width=4, height=1, font=('arial', 28), bd=1, fg='#000000', bg='#FBFBFB', command=lambda: memoryHandler('R')).place(x=325, y=145)
 
 Button(window, text='C', width=4, height=1, font=('arial', 28), bd=1, fg='#000000', bg='#A35508', command=lambda: clear()).place(x=10, y=227)
 Button(window, text='π', width=4, height=1, font=('arial', 28), bd=1, fg='#FFFFFF', bg='#4C4C4C', command=lambda: insertPi()).place(x=115, y=227)
