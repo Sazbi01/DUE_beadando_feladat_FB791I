@@ -8,3 +8,4 @@ Modulok és függvények:
 -tkinter modul függvényei: title, resizable, geometry, configure, pack, place, config, mainloop, valamint a Tk, a Label és a Button __init__
 -tkinter.messagebox: showerror
 -os.path: exists
+-mainben lévő saját függvények: insert, insertPi, clear, clearAll, showNegate, enterOperation, showResult, showSqrt, memoryHandler
